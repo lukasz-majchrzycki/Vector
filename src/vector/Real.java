@@ -6,11 +6,6 @@ import java.math.BigDecimal;
 public class Real<T extends Number> implements Calculable {
 
 	private T x;
-//Constructors
-	
-/*	public Real() {
-		this.zero();
-	}*/
 	
 	@SuppressWarnings("unchecked")
 	public <U extends Number> Real(U x) throws ClassCastException  {
@@ -26,18 +21,24 @@ public class Real<T extends Number> implements Calculable {
 //Getters, Setters	
 	
 	public T get() {
-		return this.x;
+		return  this.x;
 	}
 	
 	@Override
-	public Calculable get(Class<? extends Calculable> clazz) {
-		if (this.getClass()==clazz) {
+	public Calculable get(Class<? extends Calculable> clazz) throws ClassCastException {
+		
+		if (clazz==this.getClass()) {
 			return this;
-		} else {
+		} else if(clazz==Complex.class){
+			return new Complex<T>(this,new Real<T>(0));
+		}
+		else
+		{
 			throw new ClassCastException(Messages.WrongCalculable);
 		}
 	}
 	
+
 	@SuppressWarnings("unchecked")
 	public <U extends Number> void set(U x) throws ClassCastException {
 		
@@ -110,39 +111,39 @@ return true;
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void add(Calculable y) {
-			this.operateOnClass(Operation.ADD, (Real<T>) y);
+	public Calculable add(Calculable y) {
+		return	new Real<T> (this.operateOnClass(Operation.ADD, (Real<T>) y) );
+		 
 		
 	}
 
 	@Override
-	public void negate() {
-		this.operateOnClass(Operation.NEGATE, this);
-	}
+	public Calculable negate() {
+		return	new Real<T> (this.operateOnClass(Operation.NEGATE, this));
+		}
 	
 	@Override
-	public void zero()  {
-		this.operateOnClass(Operation.ZERO, this);	
+	public Calculable zero()  {
+		return	new Real<T> (this.operateOnClass(Operation.ZERO, this));	
 	}
 		
 	@SuppressWarnings("unchecked")
 	@Override
-	public void substract(Calculable y) {
-		this.operateOnClass(Operation.SUBSTRACT, (Real<T>) y);
-		
+	public Calculable substract(Calculable y) {
+		return	new Real<T> (this.operateOnClass(Operation.SUBSTRACT, (Real<T>) y));	
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void multiply(Calculable y) {
-		this.operateOnClass(Operation.MULTIPLY, (Real<T>) y);
+	public Calculable multiply(Calculable y) {
+		return	new Real<T> (this.operateOnClass(Operation.MULTIPLY, (Real<T>) y));
 		
 	}
 
 //Private methods
 
 	@SuppressWarnings({ "deprecation", "unchecked" })
-	private void operateOnClass(Operation op, Real<T> y) throws NumberFormatException, ArithmeticException 
+	private T operateOnClass(Operation op, Real<T> y) throws NumberFormatException, ArithmeticException 
 	{
 		
 		Inst instanceClass = Inst.valueOf(
@@ -150,29 +151,28 @@ return true;
 										.getSimpleName());
 		switch (instanceClass) {
 		case Double:
-			this.x= (T) new Double(this.operate(op, y).doubleValue());
-			break;			
+			return (T) new Double(this.operate(op, y).doubleValue());
+						
 		case Integer:
-			this.x= (T) new Integer(this.operate(op, y).intValueExact());
-			break;
+			return (T) new Integer(this.operate(op, y).intValueExact());
+			
 		case Long:
-			this.x= (T) new Long(this.operate(op, y).longValueExact());
-			break;
+			return (T) new Long(this.operate(op, y).longValueExact());
+			
 		case Float:
-			this.x= (T) new Float(this.operate(op, y).floatValue());
-			break;
+			return (T) new Float(this.operate(op, y).floatValue());
+			
 		case BigDecimal:
-			this.x= (T) this.operate(op, y);
-			break;
+			return (T) this.operate(op, y);
+			
 		case Byte:
-			this.x= (T) new Byte(this.operate(op, y).byteValueExact());
-			break;
+			return (T) new Byte(this.operate(op, y).byteValueExact());
+			
 		case Short:
-			this.x= (T) new Short(this.operate(op, y).shortValueExact());
-			break;
-
-		
-		}	
+			return (T) new Short(this.operate(op, y).shortValueExact());
+			
+		default: return null;		
+		} 
 	}
 	
 	private BigDecimal operate(Operation op, Real<T> y) throws NumberFormatException 
@@ -199,10 +199,6 @@ return true;
 		
 		return result;
 	}
-	
-	
-
-	
 
 
 }

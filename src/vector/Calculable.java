@@ -2,11 +2,11 @@ package vector;
 
 public interface Calculable extends Cloneable {
 	
-	void add(Calculable y);
-	void negate();
-	void zero();
-	void substract(Calculable y);
-	void multiply(Calculable y);
+	public Calculable add(Calculable y);
+	public Calculable negate();
+	public Calculable zero();
+	public Calculable substract(Calculable y);
+	public Calculable multiply(Calculable y);
 	public Calculable get(Class<? extends Calculable> clazz);
 
 }

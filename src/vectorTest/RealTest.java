@@ -16,19 +16,19 @@ public Real<?> makeOperation(int operation, Real<?> x, Real<?> operand) {
 	case 0:
 		return x;
 	case 1:
-		x.negate();
+		x=(Real<?>)x.negate();
 		return x;
 	case 2:
-		x.zero();
+		x=(Real<?>)x.zero();
 		return x;
 	case 3:	
-		x.add(operand);
+		x=(Real<?>)x.add(operand);
 		return x;
 	case 4:
-		x.substract(operand);
+		x=(Real<?>)x.substract(operand);
 		return x;
 	case 5:
-		x.multiply(operand);
+		x=(Real<?>)x.multiply(operand);
 		return x;
 	default:
 		return null;	
@@ -107,29 +107,31 @@ public Real<?> makeOperation(int operation, Real<?> x, Real<?> operand) {
 		assertEquals(x1.get(), (Double)1.0);
 	}
 	
-	@SuppressWarnings("deprecation")
+	//@SuppressWarnings("deprecation")
 	@Test
 	public void CloneTest() throws CloneNotSupportedException {
 		//constructor clone Test
-		Double x1 = new Double(2.0);
+		/*Double x1 = new Double(2.0);
 		Real<Double> x2 = new Real<>(x1);
+		assertEquals((Double)2.0, x2.get());
 		x2.set(10.0);
 		assertEquals(x1,(Double)2.0);
 		assertEquals(x2.get(), (Double) 10.0);
-		assertNotEquals(x1, x2.get());
+		assertNotEquals(x1, x2.get());*/
 		
-		//Number clone test
+		/*//Number clone test
 		Real<Double> x3 = new Real<>(1.0);
 		Real<Double> x4 =new Real<>(0.0);
 		x4.set(x3.get());
 		assertEquals(x3.get(), x4.get());
 		x4.set(2.0);
-		assertNotEquals(x3.get(), x4.get());
+		assertNotEquals(x3.get(), x4.get());*/
 		
 		//Real<T> clone test
 		Real<Double> x5 = new Real<>(2.0);
 		@SuppressWarnings("unchecked")
 		Real<Double> x6 = (Real<Double>) x5.clone();
+		assertEquals(x6.get(), x5.get());
 		x6.set(10.0);
 		assertNotEquals(x5.get(), x6.get());
 		
@@ -210,6 +212,7 @@ public Real<?> makeOperation(int operation, Real<?> x, Real<?> operand) {
 		assertEquals(x8.hashCode(), x9.hashCode());
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void getSetTest() {
 		Real<Double> x1 = new Real<>(0.0);
@@ -219,17 +222,24 @@ public Real<?> makeOperation(int operation, Real<?> x, Real<?> operand) {
 		Real<Double> x2 = new Real<>(0);
 		x2.set(x1);
 		assertEquals((Double)2.5, x2.get());
-		@SuppressWarnings("unchecked")
+
 		Real<Double> x3 = (Real<Double>) x2.get(x1.getClass());
 		assertEquals(x2.get(),x3.get());
+		
+		Real<Integer> x4 = new Real<>(2);
+		Complex<Integer> c1 = (Complex<Integer>) x4.get(Complex.class);
+		assertEquals(new Real<Integer>(2), c1.getRe()  );
+		assertEquals(new Real<Integer>(0), c1.getIm()  );
+		
+		//TODO Matrix test
 
 	}
 	
 	@Test (expected=ClassCastException.class)
 	public void getExceptionTest() {
 		Real<Integer> x1 = new Real<>(2);
-		Complex<Real<Integer>> c1 = new Complex<>();
-		x1.get(c1.getClass());
+		x1.get(Matrix.class);
+		//TODO 
 	}
 	
 	@Test
