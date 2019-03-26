@@ -227,7 +227,7 @@ public Real<?> makeOperation(int operation, Real<?> x, Real<?> operand) {
 		assertEquals(x2.get(),x3.get());
 		
 		Real<Integer> x4 = new Real<>(2);
-		Complex<Integer> c1 = (Complex<Integer>) x4.get(Complex.class);
+		Complex<Real<Integer>> c1 = (Complex<Real<Integer>>) x4.get(Complex.class);
 		assertEquals(new Real<Integer>(2), c1.getRe()  );
 		assertEquals(new Real<Integer>(0), c1.getIm()  );
 		

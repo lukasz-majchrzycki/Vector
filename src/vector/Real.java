@@ -5,6 +5,10 @@ import java.math.BigDecimal;
 
 public class Real<T extends Number> implements Calculable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private T x;
 	
 	@SuppressWarnings("unchecked")
@@ -24,14 +28,16 @@ public class Real<T extends Number> implements Calculable {
 		return  this.x;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public Calculable get(Class<? extends Calculable> clazz) throws ClassCastException {
 		
 		if (clazz==this.getClass()) {
 			return this;
 		} else if(clazz==Complex.class){
-			return new Complex<T>(this,new Real<T>(0));
+			return new Complex<Real<T>>(this,(Real<T>)(new Real<T>(this.x)).zero());
 		}
+		//TODO all instances
 		else
 		{
 			throw new ClassCastException(Messages.WrongCalculable);
@@ -112,7 +118,7 @@ return true;
 	@SuppressWarnings("unchecked")
 	@Override
 	public Calculable add(Calculable y) {
-		return	new Real<T> (this.operateOnClass(Operation.ADD, (Real<T>) y) );
+		return	new Real<T> (this.operateOnClass(Operation.ADD, (Real<T>) y.get(Real.class)) );
 		 
 		
 	}
@@ -130,13 +136,13 @@ return true;
 	@SuppressWarnings("unchecked")
 	@Override
 	public Calculable substract(Calculable y) {
-		return	new Real<T> (this.operateOnClass(Operation.SUBSTRACT, (Real<T>) y));	
+		return	new Real<T> (this.operateOnClass(Operation.SUBSTRACT, (Real<T>) y.get(Real.class))  );	
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public Calculable multiply(Calculable y) {
-		return	new Real<T> (this.operateOnClass(Operation.MULTIPLY, (Real<T>) y));
+		return	new Real<T> (this.operateOnClass(Operation.MULTIPLY, (Real<T>) y.get(Real.class))  );
 		
 	}
 

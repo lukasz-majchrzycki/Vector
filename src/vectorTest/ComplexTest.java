@@ -9,7 +9,7 @@ import org.junit.Test;
 public class ComplexTest {
 
 	Real<Double> r1, r2, r3, r4;
-	Complex<Double> c1, c2, c3, c4, c5, c6, c7, c8, c9;
+	Complex<Real<Double>> c1, c2, c3, c4, c5, c6, c7, c8, c9;
 	@Before
 	public void createObjects() {
 		r1=new Real<>(1.0);
@@ -31,7 +31,7 @@ public class ComplexTest {
 	
 	@Test
 	public void instanceGetSetTest() {
-		Complex<Double> cx = new Complex<>(r1,r2);
+		Complex<Real<Double>> cx = new Complex<>(r1,r2);
 		assertEquals(r1, cx.getRe());
 		assertEquals(r2, cx.getIm());
 		
@@ -50,42 +50,42 @@ public class ComplexTest {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void arithmeticsWithComplexTest() {
-		c1=(Complex<Double>) c1.add(c2);
-		assertEquals(new Complex<Double>(4.0, 6.0), c1);
+		c1=(Complex<Real<Double>>) c1.add(c2);
+		assertEquals(new Complex<Real<Double>>(4.0, 6.0), c1);
 		
 		
-		c2=(Complex<Double>) c2.substract(c3);
-		assertEquals(new Complex<Double>(2.0, 2.0), c2);
+		c2=(Complex<Real<Double>>) c2.substract(c3);
+		assertEquals(new Complex<Real<Double>>(2.0, 2.0), c2);
 		
 		//c3=new Complex<>(r1,r2);
-		c3=(Complex<Double>) c3.negate();
-		assertEquals(new Complex<Double>(-1.0, -2.0), c3);
+		c3=(Complex<Real<Double>>) c3.negate();
+		assertEquals(new Complex<Real<Double>>(-1.0, -2.0), c3);
 		
-		c4=(Complex<Double>) c4.multiply(c5);
-		assertEquals(new Complex<Double>(-5.0, 10.0), c4);
+		c4=(Complex<Real<Double>>) c4.multiply(c5);
+		assertEquals(new Complex<Real<Double>>(-5.0, 10.0), c4);
 		
-		c5=(Complex<Double>) c5.zero();
-		assertEquals(new Complex<Double>(0.0, 0.0), c5);
+		c5=(Complex<Real<Double>>) c5.zero();
+		assertEquals(new Complex<Real<Double>>(0.0, 0.0), c5);
 		
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Test
 	public void arithmeticsWithRealTest() {
-		c1=(Complex<Double>) c1.add(r4);
-		assertEquals(new Complex<Double>(5.0, 2.0), c1);
+		c1=(Complex<Real<Double>>) c1.add(r4);
+		assertEquals(new Complex<Real<Double>>(5.0, 2.0), c1);
 		
-		c2=(Complex<Double>) c2.substract(r4);
-		assertEquals(new Complex<Double>(-1.0, 4.0), c2);
+		c2=(Complex<Real<Double>>) c2.substract(r4);
+		assertEquals(new Complex<Real<Double>>(-1.0, 4.0), c2);
 		
-		c4=(Complex<Double>) c4.multiply(r4);
-		assertEquals(new Complex<Double>(12.0, 16.0), c4);
+		c4=(Complex<Real<Double>>) c4.multiply(r4);
+		assertEquals(new Complex<Real<Double>>(12.0, 16.0), c4);
 			
 	}
 	
 	@Test
 	public void nullTest() {
-		Complex<Double> cx = new Complex<>((Real<Double>)null, (Real<Double>) null);
+		Complex<Real<Double>> cx = new Complex<>((Real<Double>)null, (Real<Double>) null);
 		cx.setRe(r1);
 		assertEquals(r1, cx.getRe());
 		cx.setIm(r2);
@@ -95,7 +95,7 @@ public class ComplexTest {
 	@Test
 	public void toStringTest() {
 		assertEquals("1.0+2.0 i", c5.toString());
-		Complex<Double> cx = new Complex<>(-1.0, -2.0);
+		Complex<Real<Double>> cx = new Complex<>(-1.0, -2.0);
 		assertEquals("-1.0-2.0 i", cx.toString());
 	}
 	
@@ -103,7 +103,7 @@ public class ComplexTest {
 	public void cloneTest() throws CloneNotSupportedException  {
 		//clone test
 		@SuppressWarnings("unchecked")
-		Complex<Double> cx = (Complex<Double>)c1.clone();
+		Complex<Real<Double>> cx = (Complex<Real<Double>>)c1.clone();
 		assertEquals(new Real<Double>(1.0), cx.getRe());
 		assertEquals(new Real<Double>(2.0), cx.getIm());
 		cx.setRe(new Real<Double>(3.0));
@@ -112,7 +112,7 @@ public class ComplexTest {
 		assertNotEquals(cx.getIm(), c1.getIm());
 		
 		//constructor copy
-		Complex<Double> cx2 = new Complex<>(c1);
+		Complex<Real<Double>> cx2 = new Complex<>(c1);
 		assertEquals(new Real<Double>(1.0), cx2.getRe());
 		assertEquals(new Real<Double>(2.0), cx2.getIm());
 		cx2.setRe(new Real<Double>(3.0));
@@ -138,9 +138,9 @@ public class ComplexTest {
 		assertEquals(c1.hashCode(), c3.hashCode());
 		
 		//different values equality
-		Complex<Double> cx1 = new Complex<>(1.0, 3.0);
-		Complex<Double> cx2 = new Complex<>(2.0, 3.0);
-		Complex<Double> cx3 = new Complex<>(2.0, 4.0);
+		Complex<Real<Double>> cx1 = new Complex<>(1.0, 3.0);
+		Complex<Real<Double>> cx2 = new Complex<>(2.0, 3.0);
+		Complex<Real<Double>> cx3 = new Complex<>(2.0, 4.0);
 		assertFalse(cx1.equals(c1));
 		assertFalse(c1.equals(cx1));
 		

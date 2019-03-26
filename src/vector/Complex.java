@@ -1,13 +1,18 @@
 package vector;
 
-public class Complex<T extends Number> implements Calculable{
 
-	private Real<T> Re, Im;
+public class Complex<T extends Calculable> implements Calculable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private T Re, Im;
 	
 //constructor	
 	
 
-	public <U extends Number> Complex(Complex<U> x)  {
+	public <U extends Calculable> Complex(Complex<U> x)  {
 		
 		this.set(x);
 	}
@@ -23,12 +28,12 @@ public class Complex<T extends Number> implements Calculable{
 //getters, setters	
 	
 	@SuppressWarnings("unchecked")
-	public <U extends Number> void set(Complex<U> x)  {
+	public <U extends Calculable> void set(Complex<U> x)  {
 		if(x!=null) {
 			
 			if(x.Re!=null) {
 				try {
-					this.Re=(Real<T>) x.Re.clone();
+					this.Re=(T) x.Re.clone();
 					
 				} catch (CloneNotSupportedException e) {
 					e.printStackTrace();
@@ -36,7 +41,7 @@ public class Complex<T extends Number> implements Calculable{
 			}
 			if(x.Im!=null) {
 				try {
-					this.Im=(Real<T>) x.Im.clone();
+					this.Im=(T) x.Im.clone();
 					
 				} catch (CloneNotSupportedException e) {
 					e.printStackTrace();
@@ -54,7 +59,7 @@ public class Complex<T extends Number> implements Calculable{
 		
 		if(re!=null) {
 			try {
-				this.Re=(Real<T>) re.clone();
+				this.Re=(T) re.clone();
 				
 			} catch (CloneNotSupportedException e) {
 				e.printStackTrace();
@@ -62,7 +67,7 @@ public class Complex<T extends Number> implements Calculable{
 		}
 		if(im!=null) {
 			try {
-				this.Im=(Real<T>) im.clone();
+				this.Im=(T) im.clone();
 				
 			} catch (CloneNotSupportedException e) {
 				e.printStackTrace();
@@ -71,18 +76,25 @@ public class Complex<T extends Number> implements Calculable{
 	
 	}
 	
+	@SuppressWarnings("unchecked")
 	public <U extends Number> void set(U re, U im) {
-		this.Re=new Real<T>(re);
-		this.Im=new Real<T>(im);
+		this.Re=(T) new Real<U>(re);
+		this.Im=(T) new Real<U>(im);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public Calculable get(Class<? extends Calculable> clazz) throws ClassCastException {
 		if(clazz==this.getClass()) {
-			return this;
+			return new Complex<T>(this);
 		}
 		else if(clazz==Real.class) {
-			return new Real<T>(this.Re);
+			try {
+				return (T)this.Re.clone();
+			} catch (CloneNotSupportedException e) {
+				e.printStackTrace();
+				return null;
+			}
 		}
 		
 		else
@@ -92,19 +104,19 @@ public class Complex<T extends Number> implements Calculable{
 	}
 	
 
-	public Real<T> getRe() {
+	public T getRe() {
 		return Re;
 	}
 
-	public void setRe(Real<T> re) {
+	public void setRe(T re) {
 		Re = re;
 	}
 
-	public Real<T> getIm() {
+	public T getIm() {
 		return Im;
 	}
 
-	public void setIm(Real<T> im) {
+	public void setIm(T im) {
 		Im = im;
 	}	
 	
@@ -120,11 +132,11 @@ public class Complex<T extends Number> implements Calculable{
 			tmp=null;
 		}
 		if(y.getClass()==this.getClass()) {
-			tmp.Re= (Real<T>) this.Re.add( ((Complex<?>)y).Re);
-			tmp.Im=(Real<T>) this.Im.add( ((Complex<?>)y).Im);
+			tmp.Re= (T) this.Re.add( ((Complex<?>)y).Re);
+			tmp.Im=(T) this.Im.add( ((Complex<?>)y).Im);
 		}
 		else if(y.getClass()==Real.class) {
-			tmp.Re=(Real<T>) this.Re.add( (Real<?>)y);
+			tmp.Re=(T) this.Re.add( (Real<?>)y);
 		}
 		//TODO Matrix implementation
 		
@@ -134,7 +146,8 @@ public class Complex<T extends Number> implements Calculable{
 		}
 		return tmp;
 	}
-
+//arithmetics
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public Calculable negate() {
@@ -145,8 +158,8 @@ public class Complex<T extends Number> implements Calculable{
 			tmp=null;
 		}
 		
-		tmp.Re=(Real<T>) this.Re.negate();
-		tmp.Im=(Real<T>) this.Im.negate();
+		tmp.Re=(T) this.Re.negate();
+		tmp.Im=(T) this.Im.negate();
 
 		return tmp;
 		
@@ -162,8 +175,8 @@ public class Complex<T extends Number> implements Calculable{
 			tmp=null;
 		}
 		
-		tmp.Re=(Real<T>) this.Re.zero();
-		tmp.Im=(Real<T>) this.Im.zero();
+		tmp.Re=(T) this.Re.zero();
+		tmp.Im=(T) this.Im.zero();
 		return tmp;
 		
 	}
@@ -179,11 +192,11 @@ public class Complex<T extends Number> implements Calculable{
 		}
 		
 		if(y.getClass()==this.getClass()) {
-			tmp.Re=(Real<T>) this.Re.substract( ((Complex<?>)y).Re);
-			tmp.Im=(Real<T>) this.Im.substract( ((Complex<?>)y).Im);
+			tmp.Re=(T) this.Re.substract( ((Complex<?>)y).Re);
+			tmp.Im=(T) this.Im.substract( ((Complex<?>)y).Im);
 		}
 		else if(y.getClass()==Real.class) {
-			tmp.Re=(Real<T>) this.Re.substract( (Real<?>)y);
+			tmp.Re=(T) this.Re.substract( (Real<?>)y);
 		}
 		//TODO Matrix implementation
 		
@@ -207,17 +220,17 @@ public class Complex<T extends Number> implements Calculable{
 		
 		if(y.getClass()==this.getClass()) {
 			
-			tmp.Re= (Real<T>) this.Re.multiply( ((Complex<?>)y).Re)
+			tmp.Re= (T) this.Re.multiply( ((Complex<?>)y).Re)
 					.substract
-					 ((Real<T>) this.Im.multiply( ((Complex<?>)y).Im));
+					 ((T) this.Im.multiply( ((Complex<?>)y).Im));
 					
-			tmp.Im=(Real<T>) this.Im.multiply( ((Complex<?>)y).Re)
+			tmp.Im=(T) this.Im.multiply( ((Complex<?>)y).Re)
 					.add
-					((Real<T>) this.Re.multiply( ((Complex<?>)y).Im));
+					((T) this.Re.multiply( ((Complex<?>)y).Im));
 		}
 		else if(y.getClass()==Real.class) {
-			tmp.Re=(Real<T>) this.Re.multiply( (Real<?>)y);
-			tmp.Im=(Real<T>) this.Im.multiply( (Real<?>)y);
+			tmp.Re=(T) this.Re.multiply( (Real<?>)y);
+			tmp.Im=(T) this.Im.multiply( (Real<?>)y);
 		}
 		//TODO Matrix implementation
 		
@@ -240,7 +253,7 @@ public class Complex<T extends Number> implements Calculable{
 	
 	@Override
     public String toString() {
-	    return Re.toString()+(Im.get().doubleValue()>=0?"+":"")+Im.toString()+" i";
+	    return Re.toString()+(((Real<?>)Im.get(Real.class)).get().doubleValue()>=0?"+":"")+Im.toString()+" i";
 }
 	
 	@Override
