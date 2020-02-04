@@ -1,4 +1,4 @@
-package vectorTest;
+package eu.nanocode.vectorTest;
 
 import static org.junit.Assert.*;
 
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import vector.*;
+import eu.nanocode.vector.*;
 
 public class MatrixTest {
 

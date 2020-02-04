@@ -72,7 +72,7 @@ Real<> classes can wrap types:
 * BigDecimal
 
 Operation:
-* Complex ***** Real gives Complex
-* Vector ***** Vector gives Real
-* Matrix ***** Complex gives Matrix<Complex>
-* Matrix ***** Vector - *not implemented yet*
+* Complex **\*** Real gives Complex
+* Vector **\*** Vector gives Real
+* Matrix **\*** Complex gives Matrix<Complex>
+* Matrix **\*** Vector - *not implemented yet*

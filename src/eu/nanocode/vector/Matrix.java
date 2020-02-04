@@ -1,4 +1,4 @@
-package vector;
+package eu.nanocode.vector;
 
 import java.util.ArrayList;
 import java.util.List;

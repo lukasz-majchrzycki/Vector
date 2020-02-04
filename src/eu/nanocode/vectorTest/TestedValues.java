@@ -1,9 +1,9 @@
-package vectorTest;
+package eu.nanocode.vectorTest;
 
 import java.lang.Number;
 import java.math.BigDecimal;
 
-import vector.*;
+import eu.nanocode.vector.*;
 
 
 public class TestedValues {

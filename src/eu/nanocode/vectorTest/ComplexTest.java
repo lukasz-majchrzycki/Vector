@@ -1,10 +1,11 @@
-package vectorTest;
+package eu.nanocode.vectorTest;
 
-import vector.*;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import eu.nanocode.vector.*;
 
 public class ComplexTest {
 

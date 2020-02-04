@@ -1,4 +1,4 @@
-package vector;
+package eu.nanocode.vector;
 
 
 public class Complex<T extends Calculable> implements Calculable{

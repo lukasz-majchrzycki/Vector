@@ -1,4 +1,4 @@
-package vector;
+package eu.nanocode.vector;
 
 class Messages {
 	public static String ClassCastExp = "Wrong generic class type. Only classes Integer, Long, Short, Byte, Double, Float and BigDecimal are accepted!";

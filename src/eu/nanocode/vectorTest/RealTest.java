@@ -1,12 +1,12 @@
-package vectorTest;
+package eu.nanocode.vectorTest;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
 
+import eu.nanocode.vector.*;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
-
-import vector.*;
 
 public class RealTest {
 

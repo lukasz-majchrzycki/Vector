@@ -1,4 +1,4 @@
-package vector;
+package eu.nanocode.vector;
 
 enum Operation {
     ADD,
