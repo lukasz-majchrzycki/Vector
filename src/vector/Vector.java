@@ -25,6 +25,20 @@ public class Vector<T extends Calculable> implements Calculable {
 		this.set(x);
 	}
 	
+	@SuppressWarnings("unchecked")
+	public Vector(T... x){
+		
+		this.x = new ArrayList<T>();
+		
+		for(T element: x) {
+			try {
+				this.x.add((T) element.clone());
+			} catch (CloneNotSupportedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 
 	@SuppressWarnings("unchecked")
 	public <U extends Number> Vector(U[] x){

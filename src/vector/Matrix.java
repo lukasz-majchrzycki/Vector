@@ -68,6 +68,24 @@ public class Matrix<T extends Calculable> implements Calculable{
 			}
 	}
 	
+	@SuppressWarnings("unchecked")
+	public Matrix (int m_size, int n_size, T... x){
+		if(m_size*n_size!=x.length) {
+			throw new IndexOutOfBoundsException();
+		}
+		this.m=m_size;
+		this.n=n_size;
+		this.x= new ArrayList<T>();
+		
+			for(T element: x)	{
+				try {
+					this.x.add((T) element.clone());
+				} catch (CloneNotSupportedException e) {
+					e.printStackTrace();
+				}
+			}
+	}
+	
 	//getters, setters
 	
 	@SuppressWarnings("unchecked")
